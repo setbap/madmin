@@ -1,0 +1,2050 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Enviro Api",
+    "description": "An ASP.NET CORE Rest-api for the Enviro project ",
+    "contact": {
+      "name": "nitenviro",
+      "url": "https://www.nitenviro.ir/",
+      "email": "nitenviro@gmail.com"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Auth/Login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "ورود",
+        "description": "Sample request:\r\n            \r\n    POST /Auth/Login\r\n    {\r\n       \"Phone\": \"09111111111\",\r\n       \"LoginCode\":\"12345\"\r\n    }",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Auth/SendCode": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "ارسال کد ورود",
+        "description": "Sample request:\r\n\r\n    POST /Auth/SendCode\r\n    {\r\n       \"phone\":\"09111111111\"\r\n    }",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendCodeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendCodeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendCodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendCodeDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendCodeDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendCodeDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Auth/Refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "بروزرسانی رفرش توکن",
+        "description": "Sample request:\r\n\r\n    POST /Auth/Refresh\r\n    {\r\n       \"RefreshToken\":\"7808ae98-424a-4a65-821c-93243bf1069b\"\r\n    }",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokensResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokensResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokensResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Building": {
+      "post": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "ایجاد ساختمان جدید",
+        "description": "Sample request:\r\n\r\n    POST /Building\r\n    \r\n        {\r\n            \"name\": \"ساختمان سینا\",\r\n            \"address\": \"بابل خیابان شریعتی کوچه راهنمایی ساختمان سینا پلاک ۱\",\r\n            \"latitude\": 52.6431,\r\n            \"longitude\": 36.51748,\r\n            \"postalCode\": \"1234567890\",\r\n            \"description\": \"خونمون تو بابل\",\r\n            \"weekDay\": 1,\r\n            \"timeOfDay\": 1,\r\n            \"CityId\":\"83E3B69A-3A85-4629-97F4-B7540C4433D4\"\r\n        }",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuildingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuildingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBuildingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "حذف ساختمان",
+        "description": "Sample request:\r\n\r\n    DELETE /Building\r\n    \r\n        {\r\n            \"BuildingId\":\"4680145a-ed69-43a5-9398-7da5292cda78\"\r\n        }",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBuildingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBuildingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBuildingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "بروزرسانی ساختمان",
+        "description": "Sample request:\r\n\r\n    PATCH /Building\r\n    \r\n        {\r\n            \"BuildingId\":\"4680145a-ed69-43a5-9398-7da5292cda78\"\r\n            \"name\": \"ساختمان سینا\",\r\n            \"address\": \"بابل خیابان شریعتی کوچه راهنمایی ساختمان سینا پلاک ۱\",\r\n            \"latitude\": 52.6431,\r\n            \"longitude\": 36.51748,\r\n            \"postalCode\": \"1234567890\",\r\n            \"description\": \"خونمون تو بابل\",\r\n            \"weekDay\": 1,\r\n            \"timeOfDay\": 1,\r\n            \"CityId\":\"83E3B69A-3A85-4629-97F4-B7540C4433D4\"\r\n        }",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBuildingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBuildingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBuildingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "لیست همه ساختمان ها با کوئری",
+        "description": "Sample request:\r\n\r\n    GET /Building\r\n    \r\n        {\r\n            \r\n        }",
+        "parameters": [
+          {
+            "name": "WeekDay",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EDay"
+            }
+          },
+          {
+            "name": "TimeOfDay",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ETime"
+            }
+          },
+          {
+            "name": "CityId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true
+            }
+          },
+          {
+            "name": "SourceLatitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "SourceLongitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Building/MyBuildings": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "لیست ساختمان های من (‌کاربر معمولی)",
+        "description": "Sample request:\r\n\r\n    GET /Building/MyBuildings\r\n    \r\n        {\r\n            \r\n        }",
+        "parameters": [
+          {
+            "name": "WeekDay",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EDay"
+            }
+          },
+          {
+            "name": "TimeOfDay",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ETime"
+            }
+          },
+          {
+            "name": "CityId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Building/TodayBuildings": {
+      "get": {
+        "tags": [
+          "Building"
+        ],
+        "summary": "لیست ساختمان هایی که امروز درخواست جمع آوردی دارند",
+        "description": "Sample request:\r\n\r\n    GET /Building/TodayBuildings\r\n    \r\n        {\r\n            \r\n        }",
+        "parameters": [
+          {
+            "name": "CityId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true
+            }
+          },
+          {
+            "name": "SourceLatitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "SourceLongitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/City": {
+      "get": {
+        "tags": [
+          "City"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "NameLike",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "ProvinceId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityIEnumerableResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityIEnumerableResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityIEnumerableResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Province": {
+      "get": {
+        "tags": [
+          "Province"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "NameLike",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvinceIEnumerableResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvinceIEnumerableResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvinceIEnumerableResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/User": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/GetUserInfoRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "maxLength": 50,
+                    "minLength": 2,
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email",
+                    "nullable": true
+                  },
+                  "Avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "nullable": true
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "Avatar": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "required": [
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "phone": {
+            "maxLength": 11,
+            "minLength": 0,
+            "type": "string",
+            "format": "tel"
+          },
+          "loginCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Reason": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true,
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Success": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Tokens": {
+        "type": "object",
+        "properties": {
+          "accesstoken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpirationDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EUser": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "EDay": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ETime": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "BuildingOwnerDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatar": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BuildingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "plaque": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "weekDay": {
+            "$ref": "#/components/schemas/EDay"
+          },
+          "weekDayPersian": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "timeOfDay": {
+            "$ref": "#/components/schemas/ETime"
+          },
+          "timeOfDayPersian": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "cityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cityName": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/BuildingOwnerDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatar": {
+            "type": "string",
+            "nullable": true
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EUser"
+          },
+          "typePersian": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "buildings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuildingDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "tokens": {
+            "$ref": "#/components/schemas/Tokens"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDtoResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/LoginDto"
+          },
+          "value": {
+            "$ref": "#/components/schemas/LoginDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Result": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendCodeRequest": {
+        "required": [
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "phone": {
+            "maxLength": 11,
+            "minLength": 11,
+            "type": "string",
+            "format": "tel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendCodeDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isNewUser": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendCodeDtoResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/SendCodeDto"
+          },
+          "value": {
+            "$ref": "#/components/schemas/SendCodeDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefreshRequest": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TokensResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/Tokens"
+          },
+          "value": {
+            "$ref": "#/components/schemas/Tokens"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateBuildingRequest": {
+        "required": [
+          "address",
+          "latitude",
+          "longitude",
+          "name",
+          "postalCode"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "address": {
+            "maxLength": 500,
+            "type": "string"
+          },
+          "latitude": {
+            "maximum": 90,
+            "minimum": -90,
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "maximum": 180,
+            "minimum": -180,
+            "type": "number",
+            "format": "double"
+          },
+          "postalCode": {
+            "maxLength": 10,
+            "minLength": 10,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "weekDay": {
+            "$ref": "#/components/schemas/EDay"
+          },
+          "timeOfDay": {
+            "$ref": "#/components/schemas/ETime"
+          },
+          "cityId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BuildingDtoResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/BuildingDto"
+          },
+          "value": {
+            "$ref": "#/components/schemas/BuildingDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteBuildingRequest": {
+        "type": "object",
+        "properties": {
+          "buildingId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BooleanResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBuildingRequest": {
+        "type": "object",
+        "properties": {
+          "buildingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "maximum": 90,
+            "minimum": -90,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "maximum": 180,
+            "minimum": -180,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "postalCode": {
+            "maxLength": 10,
+            "minLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "plaque": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "weekDay": {
+            "$ref": "#/components/schemas/EDay"
+          },
+          "timeOfDay": {
+            "$ref": "#/components/schemas/ETime"
+          },
+          "cityId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EOrderBy": {
+        "enum": [
+          "ASC",
+          "DESC"
+        ],
+        "type": "string"
+      },
+      "BuildingDtoListWithTotal": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuildingDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BuildingDtoListWithTotalResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/BuildingDtoListWithTotal"
+          },
+          "value": {
+            "$ref": "#/components/schemas/BuildingDtoListWithTotal"
+          }
+        },
+        "additionalProperties": false
+      },
+      "City": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "provinceId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CityIEnumerableResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/City"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/City"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Province": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProvinceIEnumerableResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Province"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Province"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetUserInfoRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "UserDtoResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/UserDto"
+          },
+          "value": {
+            "$ref": "#/components/schemas/UserDto"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Put **_ONLY_** your JWT Bearer token on textbox below!",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

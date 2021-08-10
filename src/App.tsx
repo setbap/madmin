@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Router, Route } from "react-router-dom";
+import { history } from "./utils/utils";
+import Dashboard, { path as DashboardPath } from "./pages/index";
+import BuildingList, { path as BuildingListPath } from "./pages/building_list";
+import Login, { path as LoginPath } from "./pages/login/login";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <Route exact path={DashboardPath}>
+        <Dashboard />
+      </Route>
+      <Route exact path={BuildingListPath}>
+        <BuildingList />
+      </Route>
+      <Route exact path={LoginPath}>
+        <Login />
+      </Route>
+    </Router>
   );
 }
-
 export default App;
