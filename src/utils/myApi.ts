@@ -184,6 +184,9 @@ export interface CreateBuildingRequest {
    */
   latitude: number;
 
+  /** @format int32 */
+  plaque?: number;
+
   /**
    * @format double
    * @min -180
@@ -323,6 +326,18 @@ export interface UserDtoResult {
   successes?: Success[] | null;
   valueOrDefault?: UserDto;
   value?: UserDto;
+}
+
+export type GetUsersByAdminRequest = object;
+
+export interface UserDtoListResult {
+  isFailed?: boolean;
+  isSuccess?: boolean;
+  reasons?: Reason[] | null;
+  errors?: Error[] | null;
+  successes?: Success[] | null;
+  valueOrDefault?: UserDto[] | null;
+  value?: UserDto[] | null;
 }
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
@@ -516,7 +531,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   building = {
     /**
-     * @description Sample request: POST /Building { "name": "ساختمان سینا", "address": "بابل خیابان شریعتی کوچه راهنمایی ساختمان سینا پلاک ۱", "latitude": 52.6431, "longitude": 36.51748, "postalCode": "1234567890", "description": "خونمون تو بابل", "weekDay": 1, "timeOfDay": 1, "CityId":"83E3B69A-3A85-4629-97F4-B7540C4433D4" }
+     * @description Sample request: POST /Building { "name": "ساختمان سینا", "address": "بابل خیابان شریعتی کوچه راهنمایی ساختمان سینا پلاک ۱", "latitude": 52.6431, "longitude": 36.51748, "postalCode": "1234567890", "plaque":1, "description": "خونمون تو بابل", "weekDay": 1, "timeOfDay": 1, "CityId":"83E3B69A-3A85-4629-97F4-B7540C4433D4" }
      *
      * @tags Building
      * @name BuildingCreate
@@ -576,38 +591,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Sample request: GET /Building { }
-     *
-     * @tags Building
-     * @name BuildingList
-     * @summary لیست همه ساختمان ها با کوئری
-     * @request GET:/Building
-     * @secure
-     */
-    buildingList: (
-      query?: {
-        WeekDay?: EDay;
-        TimeOfDay?: ETime;
-        CityId?: string | null;
-        SourceLatitude?: number | null;
-        SourceLongitude?: number | null;
-        Page?: number;
-        PageSize?: number;
-        SortBy?: string | null;
-        OrderBy?: EOrderBy;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<BuildingDtoListWithTotalResult, Result>({
-        path: `/Building`,
-        method: "GET",
-        query: query,
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
      * @description Sample request: GET /Building/MyBuildings { }
      *
      * @tags Building
@@ -636,17 +619,109 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+  };
+  admin = {
+    /**
+     * @description Sample request: GET /Building { }
+     *
+     * @tags Building
+     * @name BuildingList
+     * @summary لیست همه ساختمان ها با کوئری
+     * @request GET:/Admin/Building
+     * @secure
+     */
+    buildingList: (
+      query?: {
+        WeekDay?: EDay;
+        TimeOfDay?: ETime;
+        CityId?: string | null;
+        SourceLatitude?: number | null;
+        SourceLongitude?: number | null;
+        Page?: number;
+        PageSize?: number;
+        SortBy?: string | null;
+        OrderBy?: EOrderBy;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BuildingDtoListWithTotalResult, Result>({
+        path: `/Admin/Building`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
 
+    /**
+     * No description
+     *
+     * @tags User
+     * @name UserUpdateUserPartialUpdate
+     * @request PATCH:/Admin/User/UpdateUser
+     * @secure
+     */
+    userUpdateUserPartialUpdate: (
+      data: { UserId: string; Name?: string | null; Email?: string | null; Avatar?: File | null },
+      params: RequestParams = {},
+    ) =>
+      this.request<UserDtoResult, Result>({
+        path: `/Admin/User/UpdateUser`,
+        method: "PATCH",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name UserList
+     * @request GET:/Admin/User
+     * @secure
+     */
+    userList: (query?: { userId?: string }, params: RequestParams = {}) =>
+      this.request<UserDtoResult, Result>({
+        path: `/Admin/User`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name UserAllUsersList
+     * @request GET:/Admin/User/AllUsers
+     * @secure
+     */
+    userAllUsersList: (query?: { request?: GetUsersByAdminRequest }, params: RequestParams = {}) =>
+      this.request<UserDtoListResult, Result>({
+        path: `/Admin/User/AllUsers`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+  };
+  driver = {
     /**
      * @description Sample request: GET /Building/TodayBuildings { }
      *
      * @tags Building
-     * @name TodayBuildingsList
+     * @name BuildingTodayBuildingsList
      * @summary لیست ساختمان هایی که امروز درخواست جمع آوردی دارند
-     * @request GET:/Building/TodayBuildings
+     * @request GET:/Driver/Building/TodayBuildings
      * @secure
      */
-    todayBuildingsList: (
+    buildingTodayBuildingsList: (
       query?: {
         CityId?: string | null;
         SourceLatitude?: number | null;
@@ -659,7 +734,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<BuildingDtoListWithTotalResult, Result>({
-        path: `/Building/TodayBuildings`,
+        path: `/Driver/Building/TodayBuildings`,
         method: "GET",
         query: query,
         secure: true,

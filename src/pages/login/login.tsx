@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import SendIcon from "@material-ui/icons/Send";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useLoginStyles from "./style";
-import { api } from "../../utils/utils";
+import { ACCESS_TOKEN_KEY, api, REFRESH_TOKEN_KEY } from "../../utils/utils";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -72,8 +72,6 @@ export default function SignInSide() {
         phone: phoneNumber + "",
         loginCode: +data.code,
       });
-      const ACCESS_TOKEN_KEY = "acc";
-      const REFRESH_TOKEN_KEY = "ref";
 
       localStorage.setItem(
         ACCESS_TOKEN_KEY,
@@ -135,6 +133,7 @@ export default function SignInSide() {
                   type="submit"
                   disabled={phoneIsSubmiting}
                   fullWidth
+                  data-testid="phone_submit"
                   variant="contained"
                   color="primary"
                   size="large"
@@ -179,6 +178,7 @@ export default function SignInSide() {
                   variant="contained"
                   color="primary"
                   size="large"
+                  data-testid="login_btn"
                   disableElevation
                   startIcon={<SendIcon />}
                   className={classes.submit}

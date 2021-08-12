@@ -1,8 +1,8 @@
 import axios from "axios";
 import { api, history } from "./utils";
 import { path as LoginPath } from "../pages/login/login";
-const ACCESS_TOKEN_KEY = "acc";
-const REFRESH_TOKEN_KEY = "ref";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "./utils";
+
 console.log("api.interceptors");
 
 api.instance.interceptors.request.use(

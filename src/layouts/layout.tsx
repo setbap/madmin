@@ -10,15 +10,17 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Appbar from "./appbar";
 import { path as DashboardPath, title as DashboardTitle } from "../pages/index";
 import {
+  path as UsersListPath,
+  title as UsersListTitle,
+} from "../pages/users_list";
+import {
   path as BuildingListPath,
   title as BuildingListTitle,
 } from "../pages/building_list";
 import { useHistory } from "react-router-dom";
-// import { path as LoginPath, title as LoginTitle } from "../pages/login/login";
+import { DrawerWidth } from "../utils/utils";
 import { Link as RouterLink } from "react-router-dom";
 import { forwardRef } from "react";
-
-export const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
-        width: drawerWidth,
+        width: DrawerWidth,
         flexShrink: 0,
       },
     },
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(0, 2, 0, 2),
     },
     drawerPaper: {
-      width: drawerWidth,
+      width: DrawerWidth,
     },
     content: {
       flexGrow: 1,
@@ -65,6 +67,7 @@ const Layout: FC<{ title: string }> = ({ children, title }) => {
   const pages = [
     { route: DashboardPath, title: DashboardTitle },
     { route: BuildingListPath, title: BuildingListTitle },
+    { route: UsersListPath, title: UsersListTitle },
   ];
 
   const history = useHistory();

@@ -10,7 +10,6 @@ const Index: FC = () => {
   );
 };
 
-export const path = "/building_list";
-
+export const path = "/";
 export const title = "داشبورد";
 export default Index;

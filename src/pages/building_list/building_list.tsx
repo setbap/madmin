@@ -52,7 +52,6 @@ const columns: GridColDef[] = [
     description: "This column has a value getter and is not sortable.",
     filterable: true,
     width: 160,
-    resizable: true,
     valueGetter: (params: GridValueGetterParams) => params.row?.user?.phone,
   },
 ];
@@ -61,7 +60,7 @@ const columns: GridColDef[] = [
 
 function BuildingList(): ReactElement {
   const { data, error, isLoading } = useQuery("builidngs", async () => {
-    const data = await api.building.buildingList();
+    const data = await api.admin.buildingList();
     return data;
   });
 

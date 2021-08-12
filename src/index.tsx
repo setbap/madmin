@@ -15,6 +15,7 @@ import { create } from "jss";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { SnackbarProvider } from "notistack";
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 ReactDOM.render(
@@ -23,7 +24,9 @@ ReactDOM.render(
       <StylesProvider jss={jss}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
         </ThemeProvider>
       </StylesProvider>
       <span dir="ltr">

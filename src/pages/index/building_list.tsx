@@ -1,12 +1,11 @@
 import { ReactElement } from "react";
 import { useQuery } from "react-query";
-import { api } from "../../utils/utils";
+import { api, TableLocale } from "../../utils/utils";
 import {
   DataGrid,
   GridColDef,
   GridValueGetterParams,
 } from "@material-ui/data-grid";
-import { CircularProgress, Grid } from "@material-ui/core";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
@@ -49,10 +48,9 @@ const columns: GridColDef[] = [
   {
     field: "name",
     headerName: "شماره تلفن",
-    description: "This column has a value getter and is not sortable.",
+    description: "شماره تلفن مالک ساختمان",
     filterable: true,
     width: 160,
-    resizable: true,
     valueGetter: (params: GridValueGetterParams) => params.row?.user?.phone,
   },
 ];
@@ -61,17 +59,10 @@ const columns: GridColDef[] = [
 
 function BuildingList(): ReactElement {
   const { data, error, isLoading } = useQuery("builidngs", async () => {
-    const data = await api.building.buildingList();
+    const data = await api.admin.buildingList();
     return data;
   });
 
-  if (isLoading) {
-    return (
-      <Grid container alignContent="center" alignItems="center">
-        <CircularProgress />
-      </Grid>
-    );
-  }
   if (!!error) {
     return <div>isLoading... </div>;
   }
@@ -82,6 +73,8 @@ function BuildingList(): ReactElement {
         rows={d}
         columns={columns}
         pageSize={10}
+        loading={isLoading}
+        localeText={TableLocale}
         checkboxSelection
         disableSelectionOnClick
       />
