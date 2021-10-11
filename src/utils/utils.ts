@@ -9,6 +9,7 @@ const api = new Api({
     "Access-Control-Allow-Methods": "HEAD, GET, POST, PUT, PATCH, DELETE",
     "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
   },
+  baseURL: "http://217.219.165.22:5005",
 });
 const history = createBrowserHistory();
 

@@ -32,7 +32,7 @@
     "eject": "react-scripts eject",
     "generate": " npx swagger-typescript-api --axios  -p ./swagger.json -o ./src/utils -n myApi.ts"
   },
-  "proxy": "http://217.219.165.22:5005",
+  
   "eslintConfig": {
     "extends": [
       "react-app",
