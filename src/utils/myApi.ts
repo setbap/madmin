@@ -93,6 +93,9 @@ export interface BuildingDto {
   /** @format uuid */
   cityId?: string;
   cityName?: string | null;
+
+  /** @format date-time */
+  updatedAt?: string;
   user?: BuildingOwnerDto;
 }
 
@@ -297,6 +300,153 @@ export interface CityIEnumerableResult {
   successes?: Success[] | null;
   valueOrDefault?: City[] | null;
   value?: City[] | null;
+}
+
+/**
+ * @format int32
+ */
+export type ERequestStatus = 0 | 1 | 2 | 3;
+
+export interface PickUpDto {
+  /** @format uuid */
+  id?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+
+  /** @format uuid */
+  buildingId?: string;
+  building?: BuildingDto;
+
+  /** @format uuid */
+  userId?: string;
+  user?: BuildingOwnerDto;
+
+  /** @format date-time */
+  acceptedTime?: string | null;
+
+  /** @format uuid */
+  driverId?: string | null;
+  driverMessage?: string | null;
+  status?: ERequestStatus;
+  statusPersian?: string | null;
+
+  /** @format float */
+  glassWeight?: number;
+
+  /** @format float */
+  metalWeight?: number;
+
+  /** @format float */
+  paperWeight?: number;
+
+  /** @format float */
+  plasticWeight?: number;
+
+  /** @format float */
+  mixedWeight?: number;
+
+  /** @format float */
+  allWeight?: number;
+  driverDescription?: string | null;
+  imageUrl?: string | null;
+
+  /** @format date-time */
+  receivedTime?: string | null;
+  isSpecial?: boolean;
+  specialDescription?: string | null;
+  specialImageUrl?: string | null;
+  specialWeekDay?: EDay;
+}
+
+export interface PickUpDtoResult {
+  isFailed?: boolean;
+  isSuccess?: boolean;
+  reasons?: Reason[] | null;
+  errors?: Error[] | null;
+  successes?: Success[] | null;
+  valueOrDefault?: PickUpDto;
+  value?: PickUpDto;
+}
+
+export interface ProcedurePickUpDto {
+  /** @format uuid */
+  id?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+
+  /** @format uuid */
+  buildingId?: string;
+  building?: BuildingDto;
+
+  /** @format uuid */
+  userId?: string;
+  user?: BuildingOwnerDto;
+
+  /** @format uuid */
+  driverId?: string | null;
+  driver?: BuildingOwnerDto;
+  driverMessage?: string | null;
+  status?: ERequestStatus;
+
+  /** @format date-time */
+  acceptedTime?: string | null;
+
+  /** @format float */
+  glassWeight?: number;
+
+  /** @format float */
+  metalWeight?: number;
+
+  /** @format float */
+  paperWeight?: number;
+
+  /** @format float */
+  plasticWeight?: number;
+
+  /** @format float */
+  mixedWeight?: number;
+
+  /** @format float */
+  allWeight?: number;
+  driverDescription?: string | null;
+  imageUrl?: string | null;
+
+  /** @format date-time */
+  receivedTime?: string | null;
+  isSpecial?: boolean;
+  specialDescription?: string | null;
+  specialImageUrl?: string | null;
+  specialWeekDay?: EDay;
+}
+
+export interface ProcedurePickUpDtoListWithTotal {
+  /** @format int32 */
+  total?: number;
+  data?: ProcedurePickUpDto[] | null;
+}
+
+export interface ProcedurePickUpDtoListWithTotalResult {
+  isFailed?: boolean;
+  isSuccess?: boolean;
+  reasons?: Reason[] | null;
+  errors?: Error[] | null;
+  successes?: Success[] | null;
+  valueOrDefault?: ProcedurePickUpDtoListWithTotal;
+  value?: ProcedurePickUpDtoListWithTotal;
+}
+
+export interface AcceptPickUpRequest {
+  /** @format uuid */
+  buildingId: string;
+  driverMessage?: string | null;
+}
+
+export interface AcceptSpecialPickUpRequest {
+  /** @format uuid */
+  pickUpId: string;
+  driverMessage?: string | null;
 }
 
 export interface Province {
@@ -741,6 +891,168 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name PickUpList
+     * @summary لیست جمع آوری های راننده)
+     * @request GET:/Driver/PickUp
+     * @secure
+     */
+    pickUpList: (
+      query?: {
+        SourceLatitude?: number | null;
+        SourceLongitude?: number | null;
+        IsSpecial?: boolean | null;
+        Status?: ERequestStatus;
+        Days?: number | null;
+        Page?: number;
+        PageSize?: number;
+        SortBy?: string | null;
+        OrderBy?: EOrderBy;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ProcedurePickUpDtoListWithTotalResult, Result>({
+        path: `/Driver/PickUp`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name PickUpAcceptCreate
+     * @summary قبول درخواست جمع آوری
+     * @request POST:/Driver/PickUp/Accept
+     * @secure
+     */
+    pickUpAcceptCreate: (data: AcceptPickUpRequest, params: RequestParams = {}) =>
+      this.request<PickUpDtoResult, Result>({
+        path: `/Driver/PickUp/Accept`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name PickUpSpecialList
+     * @summary لیست جمع آوری های ویژه
+     * @request GET:/Driver/PickUp/Special
+     * @secure
+     */
+    pickUpSpecialList: (
+      query?: {
+        SourceLatitude?: number | null;
+        SourceLongitude?: number | null;
+        Status?: ERequestStatus;
+        Page?: number;
+        PageSize?: number;
+        SortBy?: string | null;
+        OrderBy?: EOrderBy;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ProcedurePickUpDtoListWithTotalResult, Result>({
+        path: `/Driver/PickUp/Special`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name PickUpAcceptSpecialCreate
+     * @summary قبول درخواست جمع آوری ویژه
+     * @request POST:/Driver/PickUp/AcceptSpecial
+     * @secure
+     */
+    pickUpAcceptSpecialCreate: (data: AcceptSpecialPickUpRequest, params: RequestParams = {}) =>
+      this.request<PickUpDtoResult, Result>({
+        path: `/Driver/PickUp/AcceptSpecial`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name PickUpCompleteCreate
+     * @summary تایید دریافت
+     * @request POST:/Driver/PickUp/Complete
+     * @secure
+     */
+    pickUpCompleteCreate: (
+      data: {
+        Id: string;
+        GlassWeight?: number;
+        MetalWeight?: number;
+        PaperWeight?: number;
+        PlasticWeight?: number;
+        MixedWeight?: number;
+        DriverDescription?: string | null;
+        ImageUrl?: File | null;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PickUpDtoResult, Result>({
+        path: `/Driver/PickUp/Complete`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags PickUpHistory
+     * @name PickUpHistoryList
+     * @request GET:/Driver/PickUpHistory
+     * @secure
+     */
+    pickUpHistoryList: (
+      query?: {
+        IsSpecial?: boolean | null;
+        Days?: number | null;
+        Page?: number;
+        PageSize?: number;
+        SortBy?: string | null;
+        OrderBy?: EOrderBy;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ProcedurePickUpDtoListWithTotalResult, Result>({
+        path: `/Driver/PickUpHistory`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
   };
   city = {
     /**
@@ -757,6 +1069,92 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<CityIEnumerableResult, Result>({
         path: `/City`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+  };
+  pickUp = {
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name CreateSpecialCreate
+     * @summary ساخت درخواست جمع آوری ویژه)
+     * @request POST:/PickUp/CreateSpecial
+     * @secure
+     */
+    createSpecialCreate: (
+      data: {
+        BuildingId: string;
+        SpecialDescription?: string | null;
+        SpecialImageUrl?: File | null;
+        SpecialWeekDay: EDay;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PickUpDtoResult, Result>({
+        path: `/PickUp/CreateSpecial`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags PickUp
+     * @name UserPickUpsList
+     * @request GET:/PickUp/UserPickUps
+     * @secure
+     */
+    userPickUpsList: (
+      query?: {
+        IsSpecial?: boolean | null;
+        Status?: ERequestStatus;
+        Page?: number;
+        PageSize?: number;
+        SortBy?: string | null;
+        OrderBy?: EOrderBy;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ProcedurePickUpDtoListWithTotalResult, Result>({
+        path: `/PickUp/UserPickUps`,
+        method: "GET",
+        query: query,
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+  };
+  pickUpHistory = {
+    /**
+     * No description
+     *
+     * @tags PickUpHistory
+     * @name PickUpHistoryList
+     * @request GET:/PickUpHistory
+     * @secure
+     */
+    pickUpHistoryList: (
+      query?: {
+        IsSpecial?: boolean | null;
+        Days?: number | null;
+        Page?: number;
+        PageSize?: number;
+        SortBy?: string | null;
+        OrderBy?: EOrderBy;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ProcedurePickUpDtoListWithTotalResult, Result>({
+        path: `/PickUpHistory`,
         method: "GET",
         query: query,
         secure: true,

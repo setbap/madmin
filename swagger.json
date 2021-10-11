@@ -845,6 +845,890 @@
         }
       }
     },
+    "/PickUp/CreateSpecial": {
+      "post": {
+        "tags": [
+          "PickUp"
+        ],
+        "summary": "ساخت درخواست جمع آوری ویژه)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "BuildingId",
+                  "SpecialWeekDay"
+                ],
+                "type": "object",
+                "properties": {
+                  "BuildingId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "SpecialDescription": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "SpecialImageUrl": {
+                    "type": "string",
+                    "format": "binary",
+                    "nullable": true
+                  },
+                  "SpecialWeekDay": {
+                    "$ref": "#/components/schemas/EDay"
+                  }
+                }
+              },
+              "encoding": {
+                "BuildingId": {
+                  "style": "form"
+                },
+                "SpecialDescription": {
+                  "style": "form"
+                },
+                "SpecialImageUrl": {
+                  "style": "form"
+                },
+                "SpecialWeekDay": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PickUp/UserPickUps": {
+      "get": {
+        "tags": [
+          "PickUp"
+        ],
+        "parameters": [
+          {
+            "name": "IsSpecial",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ERequestStatus"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Driver/PickUp": {
+      "get": {
+        "tags": [
+          "PickUp"
+        ],
+        "summary": "لیست جمع آوری های راننده)",
+        "parameters": [
+          {
+            "name": "SourceLatitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "SourceLongitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "IsSpecial",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ERequestStatus"
+            }
+          },
+          {
+            "name": "Days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Driver/PickUp/Accept": {
+      "post": {
+        "tags": [
+          "PickUp"
+        ],
+        "summary": "قبول درخواست جمع آوری",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptPickUpRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptPickUpRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptPickUpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Driver/PickUp/Special": {
+      "get": {
+        "tags": [
+          "PickUp"
+        ],
+        "summary": "لیست جمع آوری های ویژه",
+        "parameters": [
+          {
+            "name": "SourceLatitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "SourceLongitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ERequestStatus"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Driver/PickUp/AcceptSpecial": {
+      "post": {
+        "tags": [
+          "PickUp"
+        ],
+        "summary": "قبول درخواست جمع آوری ویژه",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptSpecialPickUpRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptSpecialPickUpRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptSpecialPickUpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Driver/PickUp/Complete": {
+      "post": {
+        "tags": [
+          "PickUp"
+        ],
+        "summary": "تایید دریافت",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Id"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "GlassWeight": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "MetalWeight": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "PaperWeight": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "PlasticWeight": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "MixedWeight": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "DriverDescription": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "binary",
+                    "nullable": true
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "GlassWeight": {
+                  "style": "form"
+                },
+                "MetalWeight": {
+                  "style": "form"
+                },
+                "PaperWeight": {
+                  "style": "form"
+                },
+                "PlasticWeight": {
+                  "style": "form"
+                },
+                "MixedWeight": {
+                  "style": "form"
+                },
+                "DriverDescription": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "درخواست با موفقیت انجام شد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PickUpDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "اشکالی در انجام درخواست پیش آمد",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PickUpHistory": {
+      "get": {
+        "tags": [
+          "PickUpHistory"
+        ],
+        "parameters": [
+          {
+            "name": "IsSpecial",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Driver/PickUpHistory": {
+      "get": {
+        "tags": [
+          "PickUpHistory"
+        ],
+        "parameters": [
+          {
+            "name": "IsSpecial",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EOrderBy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotalResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Province": {
       "get": {
         "tags": [
@@ -1490,6 +2374,10 @@
             "type": "string",
             "nullable": true
           },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
           "user": {
             "$ref": "#/components/schemas/BuildingOwnerDto"
           }
@@ -2128,6 +3016,355 @@
             },
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ERequestStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PickUpDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "buildingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "building": {
+            "$ref": "#/components/schemas/BuildingDto"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/BuildingOwnerDto"
+          },
+          "acceptedTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "driverId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "driverMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/ERequestStatus"
+          },
+          "statusPersian": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "glassWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "metalWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "paperWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "plasticWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "mixedWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "allWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "driverDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "receivedTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isSpecial": {
+            "type": "boolean"
+          },
+          "specialDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialWeekDay": {
+            "$ref": "#/components/schemas/EDay"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PickUpDtoResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/PickUpDto"
+          },
+          "value": {
+            "$ref": "#/components/schemas/PickUpDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProcedurePickUpDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "buildingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "building": {
+            "$ref": "#/components/schemas/BuildingDto"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/BuildingOwnerDto"
+          },
+          "driverId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "driver": {
+            "$ref": "#/components/schemas/BuildingOwnerDto"
+          },
+          "driverMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/ERequestStatus"
+          },
+          "acceptedTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "glassWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "metalWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "paperWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "plasticWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "mixedWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "allWeight": {
+            "type": "number",
+            "format": "float"
+          },
+          "driverDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "receivedTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isSpecial": {
+            "type": "boolean"
+          },
+          "specialDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialWeekDay": {
+            "$ref": "#/components/schemas/EDay"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProcedurePickUpDtoListWithTotal": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProcedurePickUpDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProcedurePickUpDtoListWithTotalResult": {
+        "type": "object",
+        "properties": {
+          "isFailed": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "successes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Success"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "valueOrDefault": {
+            "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotal"
+          },
+          "value": {
+            "$ref": "#/components/schemas/ProcedurePickUpDtoListWithTotal"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AcceptPickUpRequest": {
+        "required": [
+          "buildingId"
+        ],
+        "type": "object",
+        "properties": {
+          "buildingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "driverMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AcceptSpecialPickUpRequest": {
+        "required": [
+          "pickUpId"
+        ],
+        "type": "object",
+        "properties": {
+          "pickUpId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "driverMessage": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
